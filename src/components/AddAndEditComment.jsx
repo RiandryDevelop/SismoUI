@@ -1,12 +1,36 @@
 import React, { useState } from 'react';
 
-function AddComment({ createComment }) {
-  const [commentFeatureId, setCommentFeatureId] = useState('');
-  const [commentBody, setCommentBody] = useState('');
+function AddCommentAndEdit({comment_id, feature_id}) {
+ 
+  const [commentFeatureId, setCommentFeatureId] = useState(null);
+  const [commentBody, setCommentBody] = useState("");
+
+  const createComment = async (featureID, commentBody) => {
+    const response = await fetch(`${API}comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
+      },
+      body: JSON.stringify({feature_id: featureID , body: commentBody })
+    });
+  };
+
+  // const editComment = async (featureID, commentBody) => {
+  //   const response = await fetch(`${API}comments`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Cache-Control': 'no-cache'
+  //     },
+  //     body: JSON.stringify({feature_id: featureID , body: commentBody })
+  //   });
+  // };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createComment(commentFeatureId, commentBody);
+    createComment(feature_id,commentBody);
     setCommentFeatureId('');
     setCommentBody('');
   };
@@ -27,11 +51,11 @@ function AddComment({ createComment }) {
       </div>
       <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
         <button type="submit" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-          Post comment
+          {comment_id ? 'Update comment' : 'Post comment'}
         </button>
       </div>
     </form>
   );
 }
 
-export default AddComment;
+export default AddCommentAndEdit;
