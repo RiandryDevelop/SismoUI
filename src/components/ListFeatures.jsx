@@ -1,6 +1,4 @@
 import CommentList from './CommentList';
-
-const API = import.meta.env.VITE_FEATURE_API_URL;
 function ListFeatures({ features, filteredMagType,  }) {
 
   const filteredFeatures = filteredMagType
