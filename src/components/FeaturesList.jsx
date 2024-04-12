@@ -1,5 +1,6 @@
 import CommentList from './CommentList';
-function ListFeatures({ features, filteredMagType,  }) {
+import propTypes from 'prop-types';
+function FeaturesList({ features, filteredMagType,  }) {
 
   const filteredFeatures = filteredMagType
     ? features.filter(feature => feature.attributes.mag_type === filteredMagType)
@@ -23,4 +24,9 @@ function ListFeatures({ features, filteredMagType,  }) {
   );
 }
 
-export default ListFeatures;
+FeaturesList.propTypes = {
+features: propTypes.array.isRequired,
+filteredMagType: propTypes.string.isRequired,
+}
+
+export default FeaturesList;

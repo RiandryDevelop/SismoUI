@@ -1,26 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import propTypes from 'prop-types';
+
 
 const API = import.meta.env.VITE_FEATURE_API_URL;
 
-function AddCommentAndEdit({ feature_id, comments, setComments, commentExist, setCommentExist, onEdit, updatedCommentsSaved, updateComments }) {
+function FormComment({ feature_id, comments, setComments, commentExist, setCommentExist, onEdit, updatedCommentsSaved, updateComment }) {
   const [commentBody, setCommentBody] = useState("");
-  const [updatedComments, setUpdatedComments] = useState({ id: '', body: '' });
-  const [isUpdating, setIsUpdating] = useState(false);
+  
 
   useEffect(() => {
-    if (updatedCommentsSaved.body !== '') {
-      setUpdatedComments({ id: updatedCommentsSaved.id, body: updatedCommentsSaved.body });
+    const updateCommentsFunction = async () => {
+        if (updatedCommentsSaved.body !== '') {
+        await onEdit(updatedCommentsSaved.id, updatedCommentsSaved.body);
+        updateComment(updatedCommentsSaved);
+        setCommentExist(false);
+      };
     }
-  }, [updatedCommentsSaved]);
-  
+      updateCommentsFunction();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsUpdating(true);
       if (commentExist) {
-       await onEdit(updatedComments.id, updatedComments.body);
-        updateComments(updatedComments);  
+        await onEdit(updatedCommentsSaved.id, updatedCommentsSaved.body);
+        updateComment(updatedCommentsSaved);
         setCommentExist(false);
       } else {
         const response = await fetch(`${API}comments`, {
@@ -38,11 +42,10 @@ function AddCommentAndEdit({ feature_id, comments, setComments, commentExist, se
     } catch (error) {
       console.error('Error submitting comment:', error);
     } finally {
-      setIsUpdating(false);
       setCommentExist(false);
     }
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
       <div className="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
@@ -50,13 +53,11 @@ function AddCommentAndEdit({ feature_id, comments, setComments, commentExist, se
         <textarea
           id="comment"
           rows="2"
-          value={commentExist ? updatedComments.body : commentBody}
-          onChange={(e) => commentExist ? setUpdatedComments({ ...updatedComments, body: e.target.value }) : setCommentBody(e.target.value)}
+          value={commentExist ? updatedCommentsSaved.body : commentBody}
+          onChange={(e) => setCommentBody(e.target.value)}
           className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
           placeholder="Write a comment..."
           required
-          // disabled={isUpdating}
-         
         />
       </div>
       <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
@@ -68,4 +69,15 @@ function AddCommentAndEdit({ feature_id, comments, setComments, commentExist, se
   );
 }
 
-export default AddCommentAndEdit;
+FormComment.propTypes = {
+  feature_id: propTypes.number.isRequired,
+  comments: propTypes.array.isRequired,
+  setComments: propTypes.func.isRequired,
+  commentExist: propTypes.bool.isRequired,
+  setCommentExist: propTypes.func.isRequired,
+  onEdit: propTypes.func.isRequired,
+  updatedCommentsSaved: propTypes.object.isRequired,
+  updateComment: propTypes.func.isRequired
+}
+
+export default FormComment;

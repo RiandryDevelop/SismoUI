@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import MagFilter from './components/MagFilter';
-import ListFeatures from './components/ListFeatures';
+import FeaturesList from './components/FeaturesList';
 import Pagination from './components/Pagination';
+import PerPageFilter from './components/PerPageFilter';
 
 
 const App = () => {
@@ -19,7 +20,6 @@ const App = () => {
 
 
   useEffect(() => {
-    // Calcula el número total de páginas cuando cambia la cantidad de elementos o la página actual
     setTotalPages(Math.ceil(features.length / perPage));
   }, [features, perPage]);
 
@@ -35,11 +35,9 @@ const App = () => {
     const dataFeatures = await responseFeatures.json();
     setFeatures(dataFeatures.data);
 
-    // Calcula el número total de páginas utilizando la información de paginación de la API
     const totalItems = dataFeatures.pagination.total;
     const itemsPerPage = dataFeatures.pagination.per_page;
     const totalPagesFromAPI = Math.ceil(totalItems / itemsPerPage);
-    console.log('totalPagesFromAPI', totalPagesFromAPI, 'totalItems', totalItems, 'itemsPerPage', itemsPerPage);
     setTotalPages(totalPagesFromAPI);
   };
 
@@ -47,9 +45,12 @@ const App = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Sismo App</h1>
       <h1>Current Page: {currentPage}</h1>
+      <div className="flex gap-8 ">
       <MagFilter filteredMagType={filteredMagType} setFilteredMagType={setFilteredMagType} />
-      <ListFeatures features={features} filteredMagType={filteredMagType}/>
-      <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages}/>
+      <PerPageFilter perPage={perPage} setPerPage={setPerPage} />
+      </div>
+      <FeaturesList features={features} filteredMagType={filteredMagType}/>
+      <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages} currentPage={currentPage}/>
     </div>
   );
 };
