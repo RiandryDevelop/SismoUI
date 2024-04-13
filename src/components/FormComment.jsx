@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 
 const API = import.meta.env.VITE_FEATURE_API_URL;
 
-function FormComment({ feature_id, comments, setComments, commentExist, setCommentExist, onEdit, updatedCommentsSaved, updateComment }) {
+function FormComment({ feature_id, comments, setComments, commentExist, setCommentExist, onEdit, updatedCommentsSaved,setUpdatedCommentsSaved, updateComment }) {
   const [commentBody, setCommentBody] = useState("");
   
 
@@ -54,7 +54,10 @@ function FormComment({ feature_id, comments, setComments, commentExist, setComme
           id="comment"
           rows="2"
           value={commentExist ? updatedCommentsSaved.body : commentBody}
-          onChange={(e) => setCommentBody(e.target.value)}
+          onChange={(e) =>commentExist ? setUpdatedCommentsSaved(prevState => ({
+            ...prevState,
+            body: e.target.value
+          })) : setCommentBody(e.target.value)}
           className="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
           placeholder="Write a comment..."
           required

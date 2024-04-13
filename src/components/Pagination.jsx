@@ -1,17 +1,20 @@
-import propTypes from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function Pagination({ setCurrentPage, totalPages, currentPage }) {
   
   const handleClick = (page) => {
-    if(page <= 1){
+    if (currentPage <= 1) {
       setCurrentPage(totalPages);
-    }else{
+    } else if (currentPage >= totalPages) {
+     setCurrentPage(1) 
+    }
+    else {
       setCurrentPage(page);
     }
   };
 
-  
-  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pages = Array.from({ length: totalPages > 5 ? 5 : totalPages }, (_, index) => index + 1);
 
   return (
     <nav aria-label="Page navigation example">
@@ -33,9 +36,9 @@ function Pagination({ setCurrentPage, totalPages, currentPage }) {
 }
 
 Pagination.propTypes = {
-  setCurrentPage: propTypes.func.isRequired,
-  totalPages: propTypes.number.isRequired,
-  currentPage: propTypes.number.isRequired
+  setCurrentPage: PropTypes.func.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired
 }
 
 export default Pagination;

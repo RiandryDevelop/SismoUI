@@ -1,9 +1,8 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MagFilter from './components/MagFilter';
 import FeaturesList from './components/FeaturesList';
 import Pagination from './components/Pagination';
 import PerPageFilter from './components/PerPageFilter';
-
 
 const App = () => {
   const [features, setFeatures] = useState([]);
@@ -17,11 +16,6 @@ const App = () => {
   useEffect(() => {
     fetchFeatures();
   }, [currentPage, perPage, filteredMagType]);
-
-
-  useEffect(() => {
-    setTotalPages(Math.ceil(features.length / perPage));
-  }, [features, perPage]);
 
   const fetchFeatures = async () => {
     let urlFeatures = `${API}features?page=${currentPage}&per_page=${perPage}`;
@@ -46,9 +40,10 @@ const App = () => {
       <h1 className="text-2xl font-bold mb-4">Sismo App</h1>
       <h1>Current Page: {currentPage}</h1>
       <div className="flex gap-8 ">
-      <MagFilter filteredMagType={filteredMagType} setFilteredMagType={setFilteredMagType} />
-      <PerPageFilter perPage={perPage} setPerPage={setPerPage} />
+        <MagFilter filteredMagType={filteredMagType} setFilteredMagType={setFilteredMagType} />
+        <PerPageFilter perPage={perPage} setPerPage={setPerPage} />
       </div>
+      <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages} currentPage={currentPage}/>
       <FeaturesList features={features} filteredMagType={filteredMagType}/>
       <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages} currentPage={currentPage}/>
     </div>
