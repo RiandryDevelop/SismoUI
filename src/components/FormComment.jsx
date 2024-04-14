@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import propTypes from 'prop-types';
+import propTypes from 'prop-types'
 
 
 const API = import.meta.env.VITE_FEATURE_API_URL;
@@ -14,7 +14,7 @@ function FormComment({ feature_id, comments, setComments, commentExist, setComme
         await onEdit(updatedCommentsSaved.id, updatedCommentsSaved.body);
         updateComment(updatedCommentsSaved);
         setCommentExist(false);
-      };
+      }
     }
       updateCommentsFunction();
   }, []);
@@ -80,6 +80,7 @@ FormComment.propTypes = {
   setCommentExist: propTypes.func.isRequired,
   onEdit: propTypes.func.isRequired,
   updatedCommentsSaved: propTypes.object.isRequired,
+  setUpdatedCommentsSaved: propTypes.func.isRequired,
   updateComment: propTypes.func.isRequired
 }
 
