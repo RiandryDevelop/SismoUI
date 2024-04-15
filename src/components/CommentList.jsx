@@ -68,7 +68,7 @@ function CommentList({ feature_id }) {
   const onEdit = async (comment_id, commentBody) => {
     try {
       setUpdatedCommentsSaved({ id: comment_id, body: commentBody });
-      console.log(commentBody);
+      
       const response = await fetch(`${API}comments/${comment_id}`, {
         method: 'PUT',
         headers: {

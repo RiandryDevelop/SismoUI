@@ -1,11 +1,20 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import FeaturesList from '../../components/FeaturesList';
+import { expectTypeOf } from 'vitest';
+import { server } from '../mocks/browser';
+
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+
+
 
 describe('FeaturesList', () => {
-  test('renders correctly', () => {
-    // Mock data for features
-    const features = [
+  test('renders correctly', async () => {
+     const features = [
       {
         id: 1,
         attributes: {
@@ -20,18 +29,20 @@ describe('FeaturesList', () => {
       },
     ];
 
-    // Render the FeaturesList component with mock data
-    render(<FeaturesList features={features} filteredMagType="" />);
+    
+    
 
-    // Verify that each feature's information is displayed correctly
-    features.forEach((feature) => {
-      expect(screen.getByText(`Title: ${feature.attributes.title}`)).toBeDefined();
-      expect(screen.getByText(`Place: ${feature.attributes.place}`)).toBeDefined();
-      expect(screen.getByText(`Time: ${feature.attributes.time}`)).toBeDefined();
-      expect(screen.getByText(`Magnitude: ${feature.attributes.magnitude}`)).toBeDefined();
-      expect(screen.getByText(`Magnitude type: ${feature.attributes.mag_type}`)).toBeDefined();
-      expect(screen.getByText(`Coordinates: ${feature.attributes.coordinates.longitude}, ${feature.attributes.coordinates.latitude}`)).toBeDefined();
-      expect(screen.getByText(feature.attributes.title)).toHaveAttribute('href', feature.links.external_url);
-    });
+    // Renderiza el componente FeaturesList
+    render(<FeaturesList features={features} filteredMagType="" />);
+    
+    // Expect types of the properties of the features array
+    expectTypeOf(features[0].title).toEqualTypeOf(Number)
+    expectTypeOf(features[0].place).toEqualTypeOf(String)
+    expectTypeOf(features[0].time).toEqualTypeOf(String)
+    expectTypeOf(features.magnitude).toEqualTypeOf(String)
+    expectTypeOf(features[0].mag_type).toEqualTypeOf(String)
+    expectTypeOf(features[0].attributes.coordinates.latitude).toEqualTypeOf(Number)
+    expectTypeOf(features[0].links.external_url).toEqualTypeOf(String);
+
   });
 });

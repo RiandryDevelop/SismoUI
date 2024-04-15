@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import MagFilter from './components/MagFilter';
 import FeaturesList from './components/FeaturesList';
 import Pagination from './components/Pagination';
-import PerPageFilter from './components/PerPageFilter';
 
 const App = () => {
   const [features, setFeatures] = useState([]);
   const [filteredMagType, setFilteredMagType] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage,] = useState(20);
   const [totalPages, setTotalPages] = useState(1); 
 
   const API = import.meta.env.VITE_FEATURE_API_URL;
@@ -29,7 +28,7 @@ const App = () => {
     const dataFeatures = await responseFeatures.json();
     setFeatures(dataFeatures.data);
 
-    const totalItems = dataFeatures.pagination.total;
+    const totalItems =  dataFeatures.pagination.total;
     const itemsPerPage = dataFeatures.pagination.per_page;
     const totalPagesFromAPI = Math.ceil(totalItems / itemsPerPage);
     setTotalPages(totalPagesFromAPI);
@@ -41,7 +40,6 @@ const App = () => {
       <h1>Current Page: {currentPage}</h1>
       <div className="flex gap-8 ">
         <MagFilter filteredMagType={filteredMagType} setFilteredMagType={setFilteredMagType} />
-        <PerPageFilter perPage={perPage} setPerPage={setPerPage} />
       </div>
       <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages} currentPage={currentPage}/>
       <FeaturesList features={features} filteredMagType={filteredMagType}/>
