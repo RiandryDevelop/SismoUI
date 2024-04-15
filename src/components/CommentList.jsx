@@ -86,7 +86,7 @@ function CommentList({ feature_id }) {
     }
   };
 
-  // Aplica debounce al método onEdit para evitar múltiples llamadas
+
   const debouncedOnEdit = debounce(onEdit, 300);
 
   return (

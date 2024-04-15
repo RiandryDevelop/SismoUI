@@ -30,22 +30,22 @@ const jsonMock = [{
       }
 }]
 export const handlers = [
-    // Get Features
+    
      http.get('http://localhost:3000/api/features', (req, res, ctx) => {
         return ctx.json(jsonMock)
     }),
 
-    // Get Magnitudes types
+    
     http.get('http://localhost:3000/api/magTypes', (req, res, ctx) => {
-    // Return mock data
+    
     return res(
-      ctx.json(['md', 'ml', 'ms', 'mw']) // Mocked magnitude types
+      ctx.json(['md', 'ml', 'ms', 'mw']) 
     );
   }),
-  // Get Per Page Options
+  
   http.get('http://localhost:3000/api/perPageOptions', (req, res, ctx) => {
     return res(
-      ctx.json([10, 20, 50]) // Mocked per page options
+      ctx.json([10, 20, 50]) 
     );
   })
 ]

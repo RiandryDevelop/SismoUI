@@ -32,10 +32,9 @@ describe('FeaturesList', () => {
     
     
 
-    // Renderiza el componente FeaturesList
     render(<FeaturesList features={features} filteredMagType="" />);
     
-    // Expect types of the properties of the features array
+
     expectTypeOf(features[0].title).toEqualTypeOf(Number)
     expectTypeOf(features[0].place).toEqualTypeOf(String)
     expectTypeOf(features[0].time).toEqualTypeOf(String)

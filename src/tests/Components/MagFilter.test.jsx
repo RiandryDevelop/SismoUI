@@ -12,7 +12,7 @@ describe('MagFilter', () => {
   test('renders correctly and filters magnitude types', async () => {
     render(<MagFilter filteredMagType="" setFilteredMagType={() => {}} />);
 
-    // Verify that the options are loaded from the API
+
     await waitFor(() => {
       expect(screen.getByText('All Magnitude Types')).toBeDefined();
       expect(screen.getByText('MD')).toBeDefined();
@@ -21,10 +21,10 @@ describe('MagFilter', () => {
       expect(screen.getByText('MW')).toBeDefined();
     });
 
-    // Select a magnitude type
+
     userEvent.selectOptions(screen.getByText('All Magnitude Types'), 'ms');
 
-    // Verify that the selected value is updated
+
     expect(screen.getByText('All Magnitude Types'));
   });
 });

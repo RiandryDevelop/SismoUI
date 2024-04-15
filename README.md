@@ -88,3 +88,46 @@ The project utilizes several development dependencies for building, linting, and
 ## Versioning
 
 The current version of this project is 0.0.0.
+
+## How to use the endpoints and consume the application
+
+## Endpoints
+
+- **Get all features**
+  - Endpoint: `GET /api/features`
+  - Description: Retrieves a list of all features available in the system.
+
+- **Get all comments of a particular feature**
+  - Endpoint: `GET /api/comments/feature/:feature_id`
+  - Description: Retrieves all comments associated with a specific feature identified by `feature_id`.
+
+- **Create a comment**
+  - Endpoint: `POST /api/comments`
+  - Description: Creates a new comment for a feature.
+  - Request Body: JSON object with the following parameters:
+    - `feature_id`: ID of the feature the comment belongs to.
+    - `body`: Text content of the comment.
+
+- **Update a comment**
+  - Endpoint: `PUT /api/comments/:comment_id`
+  - Description: Updates an existing comment identified by `comment_id`.
+  - Request Body: JSON object with the following parameter:
+    - `body`: Updated text content of the comment.
+
+- **Delete a comment**
+  - Endpoint: `DELETE /api/comments/:comment_id`
+  - Description: Deletes a comment identified by `comment_id`.
+
+## Response Format
+
+- Success Response: HTTP status code 200 OK for successful requests.
+- Error Response: HTTP status codes indicating the type of error occurred, along with a relevant error message in the response body.
+
+## Authentication
+
+This API does not require authentication for accessing the endpoints. However, ensure proper authorization mechanisms are implemented in your application if needed.
+
+
+
+
+
