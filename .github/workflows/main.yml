@@ -1,0 +1,48 @@
+name: SismoUI CI/CD Workflow
+
+# Trigger on pushes and pull requests to the main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Define the workflow jobs
+jobs:
+  build:
+    name: Build and Test React App
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js (specify your version)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Use the version of Node.js you require
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: |
+          npm install
+
+      # Step 4: Run tests
+      - name: Run Tests
+        run: |
+          npm test
+
+      # Step 5: Build the React App
+      - name: Build Project
+        run: |
+          npm run build
+
+      # Step 6: Deploy to GitHub Pages (optional)
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
