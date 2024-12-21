@@ -8,5 +8,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom'
+  },
+  server: {
+    host: '0.0.0.0',
+    port:5173
   }
 })
