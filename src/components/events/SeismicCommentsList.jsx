@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import FormComment from './FormComment';
+import FormComment from './CommentForm';
 import { debounce } from 'lodash';
 import PropTypes from 'prop-types';
 

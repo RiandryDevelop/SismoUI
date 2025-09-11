@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-function MagFilter({ filteredMagType, setFilteredMagType }) {
+function MagnitudeFilter({ filteredMagType, setFilteredMagType }) {
   return (
     <div className="mb-4">
       <select
@@ -17,9 +17,9 @@ function MagFilter({ filteredMagType, setFilteredMagType }) {
   );
 }
 
-MagFilter.propTypes = {
+MagnitudeFilter.propTypes = {
   filteredMagType: PropTypes.string.isRequired,
   setFilteredMagType: PropTypes.func.isRequired,
 }
 
-export default MagFilter;
+export default MagnitudeFilter;

@@ -1,6 +1,6 @@
-import CommentList from './CommentList';
+import CommentList from './SeismicCommentsList';
 import propTypes from 'prop-types';
-function FeaturesList({ features, filteredMagType,  }) {
+function EventFeaturesList({ features, filteredMagType,  }) {
 
   const filteredFeatures = filteredMagType
     ? features.filter(feature => feature.attributes.mag_type === filteredMagType)
@@ -24,9 +24,9 @@ function FeaturesList({ features, filteredMagType,  }) {
   );
 }
 
-FeaturesList.propTypes = {
+EventFeaturesList.propTypes = {
 features: propTypes.array.isRequired,
 filteredMagType: propTypes.string.isRequired,
 }
 
-export default FeaturesList;
+export default EventFeaturesList;

@@ -1,51 +1,24 @@
-import { useState, useEffect } from 'react';
-import MagFilter from './components/MagFilter';
-import FeaturesList from './components/FeaturesList';
-import Pagination from './components/Pagination';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Map from "./pages/Map";
 
-const App = () => {
-  const [features, setFeatures] = useState([]);
-  const [filteredMagType, setFilteredMagType] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage,] = useState(20);
-  const [totalPages, setTotalPages] = useState(1); 
-
-  const API = import.meta.env.VITE_FEATURE_API_URL;
-
-  useEffect(() => {
-    fetchFeatures();
-  }, [currentPage, perPage, filteredMagType]);
-
-  const fetchFeatures = async () => {
-    let urlFeatures = `${API}features?page=${currentPage}&per_page=${perPage}`;
-    const responseFeatures = await fetch(urlFeatures, {
-      headers: {
-        'Content-Type': 'application/vnd.api+json',
-        'Cache-Control': 'no-cache'
-      }
-    });
-
-    const dataFeatures = await responseFeatures.json();
-    setFeatures(dataFeatures.data);
-
-    const totalItems =  dataFeatures.pagination.total;
-    const itemsPerPage = dataFeatures.pagination.per_page;
-    const totalPagesFromAPI = Math.ceil(totalItems / itemsPerPage);
-    setTotalPages(totalPagesFromAPI);
-  };
-
+function App() {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Sismo App</h1>
-      <h1>Current Page: {currentPage}</h1>
-      <div className="flex gap-8 ">
-        <MagFilter filteredMagType={filteredMagType} setFilteredMagType={setFilteredMagType} />
+    <Router>
+      <Navbar />
+      <div className="min-h-screen">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/map" element={<Map />} />
+        </Routes>
       </div>
-      <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages} currentPage={currentPage}/>
-      <FeaturesList features={features} filteredMagType={filteredMagType}/>
-      <Pagination setCurrentPage={setCurrentPage}  totalPages={totalPages} currentPage={currentPage}/>
-    </div>
+      <Footer />
+    </Router>
   );
-};
+}
 
 export default App;
